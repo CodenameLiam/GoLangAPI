@@ -49,8 +49,8 @@ func createBook(c *fiber.Ctx) error {
 	db := database.DB
 	book := new(models.Book)
 
-	var dat map[string]interface{}
-	body := json.Unmarshal(c.Body(), &dat)
+	var body map[string]interface{}
+	json.Unmarshal(c.Body(), &body)
 
 	if err := c.BodyParser(book); err != nil {
 		c.Status(503).JSON(err)
@@ -75,7 +75,7 @@ func createBook(c *fiber.Ctx) error {
 	book.PublishedDate = publishedDate
 
 	db.Create(&book)
-	return c.JSON(body)
+	return c.JSON(book)
 
 
 	// var book models.Book
